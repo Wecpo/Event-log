@@ -1,10 +1,8 @@
-import './App.css'
+import "./App.css";
+import MainPage from "./Pages/MainPage/MainPage";
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+const App = () => {
+  return <MainPage />;
+};
 
-function App() { 
-
-  return (
-    <table>asd123</table>
-  )
-}
-
-export default App
+export default App;
