@@ -1,47 +1,56 @@
 export const eventsArray = [
   {
+    id: 1,
     date: `10.12.2022 10:00:14`,
     important: "Высокая",
     hardware: "Vegas",
     message: "Сервер Vegas недоступен",
     responsible: "Смирнов В.А.",
+    isRead: false,
   },
   {
+    id: 2,
     date: `10.12.2022 10:00:14`,
     important: "Низкая",
     hardware: "Коммутатор",
     message: "Потеряно сетевое соединение",
     responsible: "Капустин С.С.",
+    isRead: false,
   },
   {
+    id: 3,
     date: `10.12.2022 10:00:15`,
     important: "Критическая",
     hardware: "",
     message: "Отсутствие подтверждения пуска в работу",
     responsible: "Ольшанская Е.Г.",
+    isRead: false,
   },
   {
+    id: 4,
     date: `10.12.2022 10:00:15`,
-    important: "critical",
+    important: "Критическая",
     hardware: "",
     message: "Отсутствие подтверждения пуска в работу",
     responsible: "Ольшанская Е.Г.",
+    isRead: false,
   },
   {
+    id: 5,
     date: `10.12.2022 10:00:15`,
-    important: "critical",
+    important: "Критическая",
     hardware: "",
     message: "Отсутствие подтверждения пуска в работу",
     responsible: "Ольшанская Е.Г.",
+    isRead: false,
   },
   {
+    id: 6,
     date: `10.12.2022 10:00:15`,
-    important: "critical",
+    important: "Критическая",
     hardware: "",
     message: "Отсутствие подтверждения пуска в работу",
     responsible: "Ольшанская Е.Г.",
+    isRead: false,
   },
 ];
-
-// Можно в теории называть ключи на русском языке, тогда проще сделать будет динамический
-// вывод header'ов в TableEvent.
