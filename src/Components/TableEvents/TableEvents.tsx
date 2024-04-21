@@ -17,9 +17,9 @@ const TableEvents = ({ events, handleKey }) => {
       selection={selectedEvent}
       onSelectionChange={(event) => {
         setSelectedEvent(event.value);
-        eventReadStatusChange(event.value);
+        handleKey(event.value);
       }}
-      onKeyDownCapture={(eventAction) => handleKey(eventAction, selectedEvent)}
+      onKeyDown={(eventAction) => handleKey(eventAction, selectedEvent)}
       globalFilterFields={["message"]}
       showGridlines={true}
       selectionMode="single"

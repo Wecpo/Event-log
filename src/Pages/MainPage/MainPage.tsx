@@ -9,12 +9,13 @@ import { eventsArray } from "../../fakeAPI/eventsArray";
 const MainPage = () => {
   const [events, setEvents] = useState([]);
   const selectButtonOptions = ["Таблица", "Карточки"];
-  const [dispayType, setDisplayType] = useState(selectButtonOptions[0]);
+  const [dispayType, setDisplayType] = useState(selectButtonOptions[1]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(eventsArray);
 
   const changeReadStatusOfEvent = (eventAction, selectedEvent) => {
-    console.log(eventAction);
+    console.log(selectedEvent);
+
     if (selectedEvent && eventAction.code === "Space") {
       const changedEvents = events.map((event) => {
         if (selectedEvent?.id === event?.id) {
@@ -54,7 +55,8 @@ const MainPage = () => {
           hardware: "Vegaыs",
           message: "Сервер фывфвфывVegas недоступен",
           responsible: "Смфывффывирнов В.А.",
-          isRead: true,
+          isRead: false,
+          avatarSRC: " ",
         },
       ]);
     }, 800);
@@ -85,7 +87,10 @@ const MainPage = () => {
           handleKey={changeReadStatusOfEvent}
         />
       ) : (
-        <CardEvents events={filteredEvents} />
+        <CardEvents
+          events={filteredEvents}
+          handleKey={changeReadStatusOfEvent}
+        />
       )}
     </>
   );

@@ -7,6 +7,8 @@ export const eventsArray = [
     message: "Сервер Vegas недоступен",
     responsible: "Смирнов В.А.",
     isRead: false,
+    avatarSRC:
+      "https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-504f7687-6241-4430-8041-0854cffda1e9",
   },
   {
     id: 2,
@@ -16,6 +18,8 @@ export const eventsArray = [
     message: "Потеряно сетевое соединение",
     responsible: "Капустин С.С.",
     isRead: false,
+    avatarSRC:
+      "https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-504f7687-6241-4430-8041-0854cffda1e9",
   },
   {
     id: 3,
@@ -25,6 +29,8 @@ export const eventsArray = [
     message: "Отсутствие подтверждения пуска в работу",
     responsible: "Ольшанская Е.Г.",
     isRead: false,
+    avatarSRC:
+      "https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-504f7687-6241-4430-8041-0854cffda1e9",
   },
   {
     id: 4,
@@ -34,6 +40,8 @@ export const eventsArray = [
     message: "Отсутствие подтверждения пуска в работу",
     responsible: "Ольшанская Е.Г.",
     isRead: false,
+    avatarSRC:
+      "https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-504f7687-6241-4430-8041-0854cffda1e9",
   },
   {
     id: 5,
@@ -43,6 +51,8 @@ export const eventsArray = [
     message: "Отсутствие подтверждения пуска в работу",
     responsible: "Ольшанская Е.Г.",
     isRead: false,
+    avatarSRC:
+      "https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-504f7687-6241-4430-8041-0854cffda1e9",
   },
   {
     id: 6,
@@ -52,5 +62,7 @@ export const eventsArray = [
     message: "Отсутствие подтверждения пуска в работу",
     responsible: "Ольшанская Е.Г.",
     isRead: false,
+    avatarSRC:
+      "https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-504f7687-6241-4430-8041-0854cffda1e9",
   },
 ];
