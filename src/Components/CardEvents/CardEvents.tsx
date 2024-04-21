@@ -4,7 +4,7 @@ import styles from "./CardEvents.module.scss";
 const CardEvents = ({ events }) => {
   const gridItem = (event, index) => {
     return (
-      <div key={index} className={styles.card}>
+      <div key={index} className={event.isRead ? styles.readCard : styles.card}>
         <div className={styles.columns}>
           <span>Дата</span>
           <span>Важность</span>
@@ -45,7 +45,7 @@ const CardEvents = ({ events }) => {
   };
 
   return (
-    <DataView value={events} paginator rows={6} listTemplate={listTemplate} />
+    <DataView value={events} paginator rows={5} listTemplate={listTemplate} />
   );
 };
 

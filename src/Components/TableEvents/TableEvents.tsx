@@ -1,19 +1,28 @@
 import { Column } from "primereact/column";
-import { messagesArray } from "../../fakeAPI/eventsArray";
 import { DataTable } from "primereact/datatable";
 import { TABLE_COLUMNS } from "../../fakeAPI/tableColumns";
+import { useState } from "react";
 
-const TableEvents = ({ events }) => {
+const TableEvents = ({ events, handleKey }) => {
+  const rowClassName = (event) => (event.isRead ? "" : `bg-red-100 `);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   return (
     <DataTable
       value={events}
       stripedRows
-      headerColumnGroup={false}
       paginator
+      rowClassName={rowClassName}
       emptyMessage={"Сообщений не найдено, попробуйте другой поисковой запрос."}
-      rows={28}
+      rows={5}
+      selection={selectedEvent}
+      onSelectionChange={(event) => {
+        setSelectedEvent(event.value);
+        eventReadStatusChange(event.value);
+      }}
+      onKeyDownCapture={(eventAction) => handleKey(eventAction, selectedEvent)}
       globalFilterFields={["message"]}
-      showGridlines
+      showGridlines={true}
+      selectionMode="single"
       rowHover={true}
       tableStyle={{ minWidth: "50rem", minHeight: "25rem" }}
     >

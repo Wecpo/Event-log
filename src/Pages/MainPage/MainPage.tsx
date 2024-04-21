@@ -9,9 +9,22 @@ import { eventsArray } from "../../fakeAPI/eventsArray";
 const MainPage = () => {
   const [events, setEvents] = useState([]);
   const selectButtonOptions = ["Таблица", "Карточки"];
-  const [dispayType, setDisplayType] = useState(selectButtonOptions[1]);
+  const [dispayType, setDisplayType] = useState(selectButtonOptions[0]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(eventsArray);
+
+  const changeReadStatusOfEvent = (eventAction, selectedEvent) => {
+    console.log(eventAction);
+    if (selectedEvent && eventAction.code === "Space") {
+      const changedEvents = events.map((event) => {
+        if (selectedEvent?.id === event?.id) {
+          event.isRead = !event.isRead;
+        }
+        return event;
+      });
+      setEvents(changedEvents);
+    }
+  };
 
   useEffect(() => {
     // Имитируем запрос событий при монтировании
@@ -31,19 +44,20 @@ const MainPage = () => {
     );
 
   const addEvent = () =>
-    setEvents((prev) => [
-      ...prev,
-      {
-        id: 11,
-        date: `10.12.2022 10:00:41`,
-        important: "Высокаяя",
-        hardware: "Vegaыs",
-        message: "Сервер фывфвфывVegas недоступен",
-        responsible: "Смфывффывирнов В.А.",
-        isRead: true,
-      },
-    ]);
-  console.log("render", filteredEvents);
+    setTimeout(() => {
+      setEvents((prev) => [
+        ...prev,
+        {
+          id: 11,
+          date: `10.12.2022 10:00:41`,
+          important: "Высокаяя",
+          hardware: "Vegaыs",
+          message: "Сервер фывфвфывVegas недоступен",
+          responsible: "Смфывффывирнов В.А.",
+          isRead: true,
+        },
+      ]);
+    }, 800);
 
   return (
     <>
@@ -66,7 +80,10 @@ const MainPage = () => {
       <Button onClick={() => setFilteredEvents(filterEvents())}>Поиск</Button>
 
       {dispayType === "Таблица" ? (
-        <TableEvents events={filteredEvents} />
+        <TableEvents
+          events={filteredEvents}
+          handleKey={changeReadStatusOfEvent}
+        />
       ) : (
         <CardEvents events={filteredEvents} />
       )}

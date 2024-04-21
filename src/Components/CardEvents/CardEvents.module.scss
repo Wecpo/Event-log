@@ -11,6 +11,11 @@
     padding-bottom:50px;
 }
 
+.readCard {    
+    @extend .card;
+    background-color:#ecfeff;
+}
+
 .columns {
     display: flex;
     flex-direction: column;
@@ -25,8 +30,8 @@
     align-items: flex-start; 
     span {    
         @extend .info;
-        min-width:150px;
+        min-width:250px;
         min-height: 24px;
-        max-height: 24px;
+        max-height: 24px; 
     }
 }
