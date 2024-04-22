@@ -1,23 +1,27 @@
 import { DataView } from "primereact/dataview";
-import { useState } from "react";
 
-const CardEvents = ({ events, handleKey }) => {
-  const [selectedEvent, setSelectedEvent] = useState(null);
-
+const CardEvents = ({ events, handleKey, selectedEvent, setSelectedEvent }) => {
   const cardStyle = (event) => {
-    const mainStyle = `flex flex-row justify-content-center border-solid p-2 m-3 cursor-pointer hover:border-primary `;
+    const mainStyle = `flex flex-row justify-content-center border-solid p-2 m-3 cursor-pointer `;
     const unreadStyle = ` bg-red-100 `;
-    const selectedItemStyle = mainStyle + "border-primary";
+    const selectedItemStyle = mainStyle + " border-primary";
+
     if (event.isRead) {
       return mainStyle;
+    } else if (event.isRead && event === selectedEvent) {
+      console.log(`et`);
+
+      return selectedItemStyle;
     }
+
     if (event === selectedEvent && !event.isRead) {
-      return mainStyle + selectedItemStyle + unreadStyle;
+      return selectedItemStyle + unreadStyle;
     }
+
     if (!event.isRead) return mainStyle + unreadStyle;
   };
 
-  const gridItem = (event, index) => {
+  const gridItem = (event, index: number) => {
     return (
       <div
         key={index}
@@ -65,8 +69,10 @@ const CardEvents = ({ events, handleKey }) => {
   };
 
   const handleClick = (event) => {
+    console.log(event);
+
     if (event) setSelectedEvent(event);
-    else setSelectedEvent(null);
+    if (event === selectedEvent) setSelectedEvent(null);
   };
 
   return (

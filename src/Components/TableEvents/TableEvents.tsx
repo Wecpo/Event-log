@@ -1,11 +1,22 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { TABLE_COLUMNS } from "../../fakeAPI/tableColumns";
-import { useState } from "react";
+import { useEffect } from "react";
 
-const TableEvents = ({ events, handleKey }) => {
-  const rowClassName = (event) => (event.isRead ? "" : `bg-red-100 `);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+const TableEvents = ({
+  events,
+  handleKey,
+  selectedEvent,
+  setSelectedEvent,
+}) => {
+  const rowClassName = (event) => {
+    if (event === selectedEvent && event.isRead) return "  surface-300";
+
+    if (event === selectedEvent && !event.isRead) {
+      return " bg-red-300 ";
+    }
+    if (!event.isRead) return `bg-red-100 `;
+  };
   return (
     <DataTable
       value={events}
@@ -14,10 +25,12 @@ const TableEvents = ({ events, handleKey }) => {
       rowClassName={rowClassName}
       emptyMessage={"Сообщений не найдено, попробуйте другой поисковой запрос."}
       rows={5}
-      selection={selectedEvent}
-      onSelectionChange={(event) => {
-        setSelectedEvent(event.value);
-        handleKey(event.value);
+      onRowSelect={(event) => {
+        if (event.data === selectedEvent) {
+          return setSelectedEvent(null);
+        }
+        setSelectedEvent(event.data);
+        handleKey(event.data);
       }}
       onKeyDown={(eventAction) => handleKey(eventAction, selectedEvent)}
       globalFilterFields={["message"]}

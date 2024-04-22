@@ -9,13 +9,12 @@ import { eventsArray } from "../../fakeAPI/eventsArray";
 const MainPage = () => {
   const [events, setEvents] = useState([]);
   const selectButtonOptions = ["Таблица", "Карточки"];
-  const [dispayType, setDisplayType] = useState(selectButtonOptions[1]);
+  const [dispayType, setDisplayType] = useState(selectButtonOptions[0]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(eventsArray);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const changeReadStatusOfEvent = (eventAction, selectedEvent) => {
-    console.log(selectedEvent);
-
     if (selectedEvent && eventAction.code === "Space") {
       const changedEvents = events.map((event) => {
         if (selectedEvent?.id === event?.id) {
@@ -25,6 +24,7 @@ const MainPage = () => {
       });
       setEvents(changedEvents);
     }
+    return;
   };
 
   useEffect(() => {
@@ -85,11 +85,15 @@ const MainPage = () => {
         <TableEvents
           events={filteredEvents}
           handleKey={changeReadStatusOfEvent}
+          setSelectedEvent={setSelectedEvent}
+          selectedEvent={selectedEvent}
         />
       ) : (
         <CardEvents
           events={filteredEvents}
           handleKey={changeReadStatusOfEvent}
+          setSelectedEvent={setSelectedEvent}
+          selectedEvent={selectedEvent}
         />
       )}
     </>
