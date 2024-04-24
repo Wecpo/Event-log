@@ -8,24 +8,40 @@ import { eventsArray } from "../../fakeAPI/eventsArray";
 import AddEventForm from "../../Components/AddEventForm/AddEventForm";
 import dayjs from "dayjs";
 
+export type Event = {
+  id: number;
+  date: string;
+  important: string;
+  hardware: string;
+  message: string;
+  responsible: string;
+  isRead: boolean;
+  avatarSRC: string;
+};
+
 const MainPage = () => {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const selectButtonOptions = ["Таблица", "Карточки"];
   const [dispayType, setDisplayType] = useState(selectButtonOptions[0]);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [filteredEvents, setFilteredEvents] = useState(eventsArray);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState<null | Event>(null);
 
   const [inputValue, setInputValue] = useState({
     important: "",
     hardware: "",
     message: "",
     responsible: "",
+    avatarSRC:
+      "https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-504f7687-6241-4430-8041-0854cffda1e9",
   });
 
-  const changeReadStatusOfEvent = (eventAction, selectedEvent) => {
+  const changeReadStatusOfEvent = (
+    eventAction: React.KeyboardEvent<HTMLElement>,
+    selectedEvent: Event
+  ) => {
     if (selectedEvent && eventAction.code === "Space") {
-      const changedEvents = events.map((event) => {
+      const changedEvents = events.map((event: Event) => {
         if (selectedEvent?.id === event?.id) {
           event.isRead = !event.isRead;
         }
@@ -36,13 +52,11 @@ const MainPage = () => {
     return;
   };
 
-  const changeEvent = (e) => {
+  const changeEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name: key, value } = e.target;
     const newValue = { ...inputValue, [key]: value };
     setInputValue(newValue);
   };
-  console.log();
-
   useEffect(() => {
     // Имитируем запрос событий при монтировании
     setEvents(eventsArray);
@@ -64,6 +78,7 @@ const MainPage = () => {
     const newEvent = {
       ...inputValue,
       date: dayjs(new Date()).format("DD.MM.YYYY HH:mm:ss"),
+      isRead: false,
       id: events.length + 1,
     };
     setTimeout(() => {

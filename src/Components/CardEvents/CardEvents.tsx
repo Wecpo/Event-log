@@ -1,27 +1,28 @@
 import { DataView } from "primereact/dataview";
+import { Event } from "../../Pages/MainPage/MainPage";
+import { JSXElementConstructor, ReactElement, ReactNode } from "react";
 
 const CardEvents = ({ events, handleKey, selectedEvent, setSelectedEvent }) => {
   const cardStyle = (event) => {
     const mainStyle = `flex flex-row justify-content-center border-solid p-2 m-3 cursor-pointer `;
-    const unreadStyle = ` bg-red-100 `;
+    const unreadStyle = mainStyle + ` bg-red-100 `;
     const selectedItemStyle = mainStyle + " border-primary";
 
-    if (event.isRead) {
-      return mainStyle;
-    } else if (event.isRead && event === selectedEvent) {
-      console.log(`et`);
-
+    if (event === selectedEvent && event.isRead) {
       return selectedItemStyle;
     }
 
-    if (event === selectedEvent && !event.isRead) {
-      return selectedItemStyle + unreadStyle;
+    if (event.isRead) {
+      return mainStyle;
     }
 
-    if (!event.isRead) return mainStyle + unreadStyle;
+    if (event === selectedEvent && !event.isRead) {
+      return unreadStyle + " border-primary";
+    }
+    if (!event.isRead) return unreadStyle;
   };
 
-  const gridItem = (event, index: number) => {
+  const gridItem = (event: Event, index: number) => {
     return (
       <div
         key={index}
@@ -53,24 +54,27 @@ const CardEvents = ({ events, handleKey, selectedEvent, setSelectedEvent }) => {
     );
   };
 
-  const itemTemplate = (event, index) => {
+  const itemTemplate = (
+    event: Event,
+    index: number
+  ): undefined | ReactElement => {
     if (!event) {
       return;
     }
     return gridItem(event, index);
   };
 
-  const listTemplate = (events) => {
+  const listTemplate = (events: Event[]) => {
     return (
       <div className="grid">
-        {events.map((event, index) => itemTemplate(event, index))}
+        {events.map((event: Event, index: number) =>
+          itemTemplate(event, index)
+        )}
       </div>
     );
   };
 
-  const handleClick = (event) => {
-    console.log(event);
-
+  const handleClick = (event: Event) => {
     if (event) setSelectedEvent(event);
     if (event === selectedEvent) setSelectedEvent(null);
   };

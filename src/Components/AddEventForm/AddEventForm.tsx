@@ -1,7 +1,17 @@
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { Event } from "../../Pages/MainPage/MainPage";
+import { ChangeEventHandler } from "react";
 
-const AddEventForm = ({ changeEvent, inputValue, addEvent }) => {
+const AddEventForm = ({
+  changeEvent,
+  inputValue,
+  addEvent,
+}: {
+  changeEvent: ChangeEventHandler<HTMLInputElement>;
+  inputValue: Event;
+  addEvent: Function;
+}) => {
   return (
     <div className="flex flex-column align-items-center m-5">
       <InputText
@@ -34,7 +44,7 @@ const AddEventForm = ({ changeEvent, inputValue, addEvent }) => {
         onChange={changeEvent}
       />
 
-      <Button className="m-1" onClick={addEvent}>
+      <Button className="m-1" onClick={(e) => addEvent(e)}>
         Добавить событие
       </Button>
     </div>

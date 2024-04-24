@@ -1,20 +1,28 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { TABLE_COLUMNS } from "../../fakeAPI/tableColumns";
-import { useEffect } from "react";
+import { Event } from "../../Pages/MainPage/MainPage";
 
 const TableEvents = ({
   events,
   handleKey,
   selectedEvent,
   setSelectedEvent,
+}: {
+  events: Event[];
+  handleKey: Function;
+  selectedEvent: Event;
+  setSelectedEvent: Function;
 }) => {
-  const rowClassName = (event) => {
-    if (event === selectedEvent && event.isRead) return "  surface-300";
+  const rowClassName = (event: Event): string | undefined => {
+    if (event === selectedEvent && event.isRead) {
+      return "border-primary surface-300";
+    }
 
     if (event === selectedEvent && !event.isRead) {
-      return " bg-red-300 ";
+      return "border-primary bg-red-300 ";
     }
+
     if (!event.isRead) return `bg-red-100 `;
   };
   return (
@@ -37,10 +45,15 @@ const TableEvents = ({
       showGridlines={true}
       selectionMode="single"
       rowHover={true}
-      tableStyle={{ minWidth: "50rem", minHeight: "25rem" }}
+      tableStyle={{ minWidth: "50rem" }}
     >
       {TABLE_COLUMNS.map((event) => (
-        <Column key={event.field} field={event.field} header={event.header} />
+        <Column
+          key={event.field}
+          sortable
+          field={event.field}
+          header={event.header}
+        />
       ))}
     </DataTable>
   );
