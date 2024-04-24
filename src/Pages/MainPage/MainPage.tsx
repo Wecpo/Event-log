@@ -5,6 +5,8 @@ import { SelectButton } from "primereact/selectbutton";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { eventsArray } from "../../fakeAPI/eventsArray";
+import AddEventForm from "../../Components/AddEventForm/AddEventForm";
+import dayjs from "dayjs";
 
 const MainPage = () => {
   const [events, setEvents] = useState([]);
@@ -13,6 +15,13 @@ const MainPage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(eventsArray);
   const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const [inputValue, setInputValue] = useState({
+    important: "",
+    hardware: "",
+    message: "",
+    responsible: "",
+  });
 
   const changeReadStatusOfEvent = (eventAction, selectedEvent) => {
     if (selectedEvent && eventAction.code === "Space") {
@@ -26,6 +35,13 @@ const MainPage = () => {
     }
     return;
   };
+
+  const changeEvent = (e) => {
+    const { name: key, value } = e.target;
+    const newValue = { ...inputValue, [key]: value };
+    setInputValue(newValue);
+  };
+  console.log();
 
   useEffect(() => {
     // Имитируем запрос событий при монтировании
@@ -44,26 +60,24 @@ const MainPage = () => {
         .includes(searchValue.toLocaleLowerCase().trim())
     );
 
-  const addEvent = () =>
+  const addEvent = () => {
+    const newEvent = {
+      ...inputValue,
+      date: dayjs(new Date()).format("DD.MM.YYYY HH:mm:ss"),
+      id: events.length + 1,
+    };
     setTimeout(() => {
-      setEvents((prev) => [
-        ...prev,
-        {
-          id: 11,
-          date: `10.12.2022 10:00:41`,
-          important: "Высокаяя",
-          hardware: "Vegaыs",
-          message: "Сервер фывфвфывVegas недоступен",
-          responsible: "Смфывффывирнов В.А.",
-          isRead: false,
-          avatarSRC: " ",
-        },
-      ]);
+      setEvents((prev) => [...prev, newEvent]);
     }, 800);
+  };
 
   return (
     <>
-      <Button onClick={addEvent}>add</Button>
+      <AddEventForm
+        changeEvent={changeEvent}
+        inputValue={inputValue}
+        addEvent={addEvent}
+      />
       <SelectButton
         value={dispayType}
         options={selectButtonOptions}
