@@ -19,15 +19,25 @@ export type Event = {
   avatarSRC: string;
 };
 
+export type EventFromAddForm = {
+  important: string;
+  hardware: string;
+  message: string;
+  responsible: string;
+  avatarSRC: string;
+};
+
 const MainPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const selectButtonOptions = ["Таблица", "Карточки"];
   const [dispayType, setDisplayType] = useState(selectButtonOptions[0]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [filteredEvents, setFilteredEvents] = useState(eventsArray);
-  const [selectedEvent, setSelectedEvent] = useState<null | Event>(null);
+  const [selectedEvent, setSelectedEvent] = useState<any>(null); // !!!!!!!!!!!
+  //!!!!!!!!!!!!!!!!! Поправить тип setSelectedEvent
 
-  const [inputValue, setInputValue] = useState({
+  const [addEventFormValue, setAddEventFormValue] = useState({
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     important: "",
     hardware: "",
     message: "",
@@ -54,8 +64,8 @@ const MainPage = () => {
 
   const changeEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name: key, value } = e.target;
-    const newValue = { ...inputValue, [key]: value };
-    setInputValue(newValue);
+    const newValue = { ...addEventFormValue, [key]: value };
+    setAddEventFormValue(newValue);
   };
   useEffect(() => {
     // Имитируем запрос событий при монтировании
@@ -76,7 +86,7 @@ const MainPage = () => {
 
   const addEvent = () => {
     const newEvent = {
-      ...inputValue,
+      ...addEventFormValue,
       date: dayjs(new Date()).format("DD.MM.YYYY HH:mm:ss"),
       isRead: false,
       id: events.length + 1,
@@ -90,7 +100,7 @@ const MainPage = () => {
     <>
       <AddEventForm
         changeEvent={changeEvent}
-        inputValue={inputValue}
+        addEventFormValue={addEventFormValue}
         addEvent={addEvent}
       />
       <SelectButton

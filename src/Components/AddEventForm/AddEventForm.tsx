@@ -1,15 +1,15 @@
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { Event } from "../../Pages/MainPage/MainPage";
 import { ChangeEventHandler } from "react";
+import { EventFromAddForm } from "../../Pages/MainPage/MainPage";
 
 const AddEventForm = ({
   changeEvent,
-  inputValue,
+  addEventFormValue,
   addEvent,
 }: {
   changeEvent: ChangeEventHandler<HTMLInputElement>;
-  inputValue: Event;
+  addEventFormValue: EventFromAddForm; //>
   addEvent: Function;
 }) => {
   return (
@@ -17,21 +17,21 @@ const AddEventForm = ({
       <InputText
         className="m-1"
         name="important"
-        value={inputValue.important}
+        value={addEventFormValue.important}
         placeholder="Важность"
         onChange={changeEvent}
       />
       <InputText
         className="m-1"
         name="hardware"
-        value={inputValue.hardware}
+        value={addEventFormValue.hardware}
         placeholder="Оборудование"
         onChange={changeEvent}
       />
       <InputText
         className="m-1"
         name="message"
-        value={inputValue.message}
+        value={addEventFormValue.message}
         placeholder="Сообщение"
         onChange={changeEvent}
         required={true}
@@ -39,7 +39,7 @@ const AddEventForm = ({
       <InputText
         className="m-1"
         name="responsible"
-        value={inputValue.responsible}
+        value={addEventFormValue.responsible}
         placeholder="Ответственный"
         onChange={changeEvent}
       />

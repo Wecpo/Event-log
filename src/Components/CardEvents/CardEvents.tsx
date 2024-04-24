@@ -1,9 +1,19 @@
 import { DataView } from "primereact/dataview";
 import { Event } from "../../Pages/MainPage/MainPage";
-import { JSXElementConstructor, ReactElement, ReactNode } from "react";
+import { ReactElement } from "react";
 
-const CardEvents = ({ events, handleKey, selectedEvent, setSelectedEvent }) => {
-  const cardStyle = (event) => {
+const CardEvents = ({
+  events,
+  handleKey,
+  selectedEvent,
+  setSelectedEvent,
+}: {
+  events: Event[];
+  handleKey: Function;
+  selectedEvent: Event;
+  setSelectedEvent: Function;
+}) => {
+  const cardStyle = (event: Event) => {
     const mainStyle = `flex flex-row justify-content-center border-solid p-2 m-3 cursor-pointer `;
     const unreadStyle = mainStyle + ` bg-red-100 `;
     const selectedItemStyle = mainStyle + " border-primary";
@@ -64,7 +74,8 @@ const CardEvents = ({ events, handleKey, selectedEvent, setSelectedEvent }) => {
     return gridItem(event, index);
   };
 
-  const listTemplate = (events: Event[]) => {
+  const listTemplate = (events: Event[]): any => {
+    //!!!!!!!!!!!!!!
     return (
       <div className="grid">
         {events.map((event: Event, index: number) =>
