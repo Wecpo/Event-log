@@ -2,6 +2,9 @@ test </br>
 Event LOG | 
 TS / React + PrimeReact
 
+![techSpecification](https://github.com/Event-log/blob/main/technical%20specification.jpg)
+
+
 ТЗ:
 Написать одностраничное приложение Журнал событий.
 Необходимо использовать Vue.js 3 и PrimeVue или React и PrimeReact.
