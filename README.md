@@ -2,7 +2,7 @@ test </br>
 Event LOG | 
 TS / React + PrimeReact
 
-![techSpecification](https://github.com/Event-log/blob/main/technical-specification.jpg)
+![techSpecification](https://github.com/Wecpo/Event-log/blob/main/technical-specification.jpg)
 
 
 ТЗ:
