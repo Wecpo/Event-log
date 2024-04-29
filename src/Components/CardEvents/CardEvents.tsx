@@ -1,15 +1,14 @@
 import { DataView } from "primereact/dataview";
-import { Event } from "../../Pages/MainPage/MainPage";
-import { ReactElement } from "react";
+import { Event } from "../../types";
 
 const CardEvents = ({
-  events,
-  handleKey,
+  allEvents,
+  changeReadStatusOfEvent,
   selectedEvent,
   setSelectedEvent,
 }: {
-  events: Event[];
-  handleKey: Function;
+  allEvents: Event[];
+  changeReadStatusOfEvent: Function;
   selectedEvent: Event;
   setSelectedEvent: Function;
 }) => {
@@ -39,9 +38,9 @@ const CardEvents = ({
         style={{ width: "420px" }}
         tabIndex={0}
         className={cardStyle(event)}
-        onClick={() => handleClick(event)}
+        onClick={() => handleOnCardClick(event)}
         onKeyDown={(eventAction) => {
-          handleKey(eventAction, selectedEvent);
+          changeReadStatusOfEvent(eventAction, selectedEvent);
         }}
       >
         <div className="flex flex-column align-items-start mb-1 mr-3">
@@ -64,34 +63,27 @@ const CardEvents = ({
     );
   };
 
-  const itemTemplate = (
-    event: Event,
-    index: number
-  ): undefined | ReactElement => {
-    if (!event) {
-      return;
-    }
-    return gridItem(event, index);
-  };
-
-  const listTemplate = (events: Event[]): any => {
+  const listTemplate = (allEvents: Event[]): any => {
     //!!!!!!!!!!!!!!
     return (
       <div className="grid">
-        {events.map((event: Event, index: number) =>
-          itemTemplate(event, index)
-        )}
+        {allEvents.map((event: Event, index: number) => gridItem(event, index))}
       </div>
     );
   };
 
-  const handleClick = (event: Event) => {
+  const handleOnCardClick = (event: Event) => {
     if (event) setSelectedEvent(event);
     if (event === selectedEvent) setSelectedEvent(null);
   };
 
   return (
-    <DataView value={events} paginator rows={12} listTemplate={listTemplate} />
+    <DataView
+      value={allEvents}
+      paginator
+      rows={12}
+      listTemplate={listTemplate}
+    />
   );
 };
 
