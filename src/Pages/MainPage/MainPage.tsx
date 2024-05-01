@@ -6,25 +6,9 @@ import SearchString from "../../Components/Search/SearchString";
 import EventsDisplay from "../../Components/EventsDisplay/EventsDisplay";
 
 const MainPage = () => {
-  const [allEvents, setAllEvents] = useState<Event[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState(eventsArray);
+  const [allEvents, setAllEvents] = useState<Event[] | []>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>(eventsArray);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-
-  const changeReadStatusOfEvent = (
-    eventAction: React.KeyboardEvent<HTMLElement>,
-    selectedEvent: Event
-  ) => {
-    if (selectedEvent && eventAction.code === "Space") {
-      const changedEvents = allEvents.map((event: Event) => {
-        if (selectedEvent.id === event.id) {
-          event.isRead = !event.isRead;
-        }
-
-        return event;
-      });
-      setAllEvents(changedEvents);
-    }
-  };
 
   useEffect(() => {
     // Имитируем запрос событий при монтировании
@@ -44,7 +28,7 @@ const MainPage = () => {
       />
       <EventsDisplay
         allEvents={filteredEvents}
-        changeReadStatusOfEvent={changeReadStatusOfEvent}
+        setAllEvents={setAllEvents}
         setSelectedEvent={setSelectedEvent}
         selectedEvent={selectedEvent}
       />

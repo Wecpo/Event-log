@@ -1,7 +1,15 @@
 import { SelectButton } from "primereact/selectbutton";
 import { SELECT_BUTTON_OPTIONS } from "../../constants";
 
-const ToggleEventsDisplayType = ({ displayType, setDisplayType }) => {
+type ToggleEventsDisplayTypeProps = {
+  displayType: string;
+  setDisplayType: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const ToggleEventsDisplayType = ({
+  displayType,
+  setDisplayType,
+}: ToggleEventsDisplayTypeProps) => {
   return (
     <SelectButton
       className="mb-3"

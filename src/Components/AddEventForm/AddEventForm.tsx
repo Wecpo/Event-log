@@ -3,7 +3,8 @@ import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { Dropdown } from "primereact/dropdown";
-import { EVENT_IMPORTANT_TYPE, SELECT_BUTTON_OPTIONS } from "../../constants";
+import { EVENT_IMPORTANT_TYPE } from "../../constants";
+import { Event } from "../../types";
 
 const addEventFormInitialState = {
   hardware: "",
@@ -13,13 +14,12 @@ const addEventFormInitialState = {
     "https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-504f7687-6241-4430-8041-0854cffda1e9",
 };
 
-const AddEventForm = ({
-  setAllEvents,
-  allEvents,
-}: {
-  setAllEvents: () => void;
+type AddEventFormProps = {
+  setAllEvents: React.Dispatch<React.SetStateAction<Event[]>>;
   allEvents: Event[];
-}) => {
+};
+
+const AddEventForm = ({ setAllEvents, allEvents }: AddEventFormProps) => {
   const [addEventFormValue, setAddEventFormValue] = useState(
     addEventFormInitialState
   );
@@ -33,7 +33,7 @@ const AddEventForm = ({
     setAddEventFormValue(newValue);
   };
 
-  const addEvent = (e) => {
+  const addEvent = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const newEvent = {
       ...addEventFormValue,
@@ -49,13 +49,15 @@ const AddEventForm = ({
   };
 
   return (
-    <form className="flex flex-column align-items-center m-7">
+    <form
+      className="flex flex-column align-items-center m-7"
+      onSubmit={addEvent}
+    >
       <Dropdown
         value={selectedImportantOfNewEvent}
         options={EVENT_IMPORTANT_TYPE}
         optionLabel="name"
         placeholder="Важность"
-        required={true}
         onChange={(e) => setSelectedImportantOfNewEvent(e.value)}
       />
       <InputText
@@ -82,7 +84,7 @@ const AddEventForm = ({
         onChange={changeEventForm}
       />
 
-      <Button className="m-2" onClick={(e) => addEvent(e)}>
+      <Button className="m-2" type="submit">
         Добавить событие
       </Button>
     </form>

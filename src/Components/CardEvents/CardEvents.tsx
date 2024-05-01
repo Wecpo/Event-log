@@ -1,88 +1,64 @@
 import { DataView } from "primereact/dataview";
 import { Event } from "../../types";
+import EventCard from "../EventCard/EventCard";
+import { useEffect } from "react";
+
+type CardEventsProps = {
+  allEvents: Event[];
+  changeReadStatusOfEvent: (
+    eventAction: React.KeyboardEvent<HTMLDivElement>,
+    selectedEvent: Event | null
+  ) => void;
+  selectedEvent: Event | null;
+  setSelectedEvent: React.Dispatch<React.SetStateAction<Event | null>>;
+};
 
 const CardEvents = ({
   allEvents,
   changeReadStatusOfEvent,
   selectedEvent,
   setSelectedEvent,
-}: {
-  allEvents: Event[];
-  changeReadStatusOfEvent: Function;
-  selectedEvent: Event;
-  setSelectedEvent: Function;
-}) => {
-  const cardStyle = (event: Event) => {
-    const mainStyle = `flex flex-row justify-content-center border-solid p-2 m-3 cursor-pointer `;
-    const unreadStyle = mainStyle + ` bg-red-100 `;
-    const selectedItemStyle = mainStyle + " border-primary";
-
-    if (event === selectedEvent && event.isRead) {
-      return selectedItemStyle;
-    }
-
-    if (event.isRead) {
-      return mainStyle;
-    }
-
-    if (event === selectedEvent && !event.isRead) {
-      return unreadStyle + " border-primary";
-    }
-    if (!event.isRead) return unreadStyle;
-  };
-
-  const gridItem = (event: Event, index: number) => {
-    return (
-      <div
-        key={index}
-        style={{ width: "420px" }}
-        tabIndex={0}
-        className={cardStyle(event)}
-        onClick={() => handleOnCardClick(event)}
-        onKeyDown={(eventAction) => {
-          changeReadStatusOfEvent(eventAction, selectedEvent);
-        }}
-      >
-        <div className="flex flex-column align-items-start mb-1 mr-3">
-          <span className="font-semibold">Дата</span>
-          <span className="font-semibold">Важность</span>
-          <span className="font-semibold">Оборудование</span>
-          <span className="font-semibold">Сообщение</span>
-        </div>
-        <div className="flex flex-column align-items-start mb-2">
-          <span style={{ minWidth: "150px" }}>{event.date}</span>
-          <span>{event.important}</span>
-          <span>{event.hardware ? event.hardware : "--------------"}</span>
-          <span>{event.message ? event.message : " 1"}</span>
-        </div>
-        <div className="flex flex-column align-items-center flex-wrap ">
-          <img style={{ width: `55px` }} src={event.avatarSRC} alt="" />
-          <span>{event.responsible}</span>
-        </div>
-      </div>
-    );
-  };
-
-  const listTemplate = (allEvents: Event[]): any => {
-    //!!!!!!!!!!!!!!
-    return (
-      <div className="grid">
-        {allEvents.map((event: Event, index: number) => gridItem(event, index))}
-      </div>
-    );
-  };
-
+}: CardEventsProps) => {
   const handleOnCardClick = (event: Event) => {
     if (event) setSelectedEvent(event);
     if (event === selectedEvent) setSelectedEvent(null);
   };
 
+  useEffect(() => {
+    const onOutsideOfCardClick = () => {
+      const target = event?.target as HTMLElement;
+      if (target.id !== "eventCard") {
+        setSelectedEvent(null);
+      }
+    };
+
+    document.addEventListener("click", onOutsideOfCardClick);
+
+    return () => document.removeEventListener("click", onOutsideOfCardClick);
+  }, []);
+
+  const cardTemplate = (allEvents: Event[]): JSX.Element => {
+    const list = allEvents.map((event: Event, index) => (
+      <EventCard
+        key={index}
+        event={event}
+        changeReadStatusOfEvent={changeReadStatusOfEvent}
+        selectedEvent={selectedEvent}
+        handleOnCardClick={handleOnCardClick}
+      />
+    ));
+    return (
+      <div style={{ minWidth: "1360px" }} className="grid ">
+        {list}
+      </div>
+    );
+  };
   return (
     <DataView
       value={allEvents}
       paginator
-      rows={12}
-      listTemplate={listTemplate}
+      rows={6}
+      listTemplate={cardTemplate}
     />
   );
 };

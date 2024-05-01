@@ -2,41 +2,62 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { TABLE_COLUMNS } from "../../constants";
 import { Event } from "../../types";
+import { useEffect } from "react";
+
+type TableEventsProps = {
+  allEvents: Event[];
+  changeReadStatusOfEvent: (
+    eventAction: React.KeyboardEvent<HTMLDivElement>,
+    selectedEvent: Event | null
+  ) => void;
+  selectedEvent: Event | null;
+  setSelectedEvent: React.Dispatch<React.SetStateAction<Event | null>>;
+};
 
 const TableEvents = ({
   allEvents,
   changeReadStatusOfEvent,
   selectedEvent,
   setSelectedEvent,
-}: {
-  allEvents: Event[];
-  changeReadStatusOfEvent: Function;
-  selectedEvent: Event;
-  setSelectedEvent: Function;
-}) => {
-  // const rowClassName = (event: Event): string | undefined => {
-  //   if (event === selectedEvent && event.isRead) {
-  //     return "border-primary hover:bg-blue-100 ";
-  //   }
+}: TableEventsProps) => {
+  useEffect(() => {
+    const handleMouseOutOfRowsClick = (): void => {
+      const target = event?.target as HTMLElement;
+      if (!target.matches("td")) {
+        setSelectedEvent(null);
+      }
+    };
 
-  //   if (event === selectedEvent && !event.isRead) {
-  //     return "border-primary bg-red-300 hover:bg-blue-100 ";
-  //   }
+    document.addEventListener("click", handleMouseOutOfRowsClick);
 
-  //   if (!event.isRead) return `bg-red-100 hover:bg-blue-100 `;
-  // };
+    return () =>
+      document.removeEventListener("click", handleMouseOutOfRowsClick);
+  }, []);
+
+  const rowClassName = (event: Event): string | undefined => {
+    let rowClass = "hover:text-primary-700 ";
+    if (event === selectedEvent && !event.isRead) {
+      rowClass += "underline bg-gray-300 ";
+    }
+    if (event === selectedEvent && event.isRead) {
+      rowClass += "underline ";
+    }
+    if (!event.isRead) {
+      rowClass += "bg-gray-300";
+    }
+    return rowClass;
+  };
+
   return (
     <DataTable
       value={allEvents}
       paginator
+      rowClassName={rowClassName}
       emptyMessage={"Сообщений не найдено, попробуйте другой поисковой запрос."}
       rows={5}
-      onRowSelect={(event) => {
-        if (event.data === selectedEvent) {
-          return setSelectedEvent(null);
-        }
-        setSelectedEvent(event.data);
-        changeReadStatusOfEvent(event.data);
+      onRowClick={(event) => {
+        const currentEvent = event.data as Event;
+        setSelectedEvent(currentEvent);
       }}
       onKeyDown={(eventAction) =>
         changeReadStatusOfEvent(eventAction, selectedEvent)
@@ -45,7 +66,7 @@ const TableEvents = ({
       globalFilterFields={["message"]}
       showGridlines={true}
       selectionMode="single"
-      tableStyle={{ minWidth: "50rem" }}
+      tableStyle={{ minWidth: "1200px" }}
     >
       {TABLE_COLUMNS.map((column) => (
         <Column

@@ -3,16 +3,14 @@ import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { Event } from "../../types";
 
-const SearchString = ({
-  allEvents,
-  setFilteredEvents,
-}: {
+type SearchStringProps = {
   allEvents: Event[];
-  setFilteredEvents: any; /////////////////////////////////!!!!!!!!!!!!!!
-}) => {
+  setFilteredEvents: React.Dispatch<React.SetStateAction<Event[]>>;
+};
+
+const SearchString = ({ allEvents, setFilteredEvents }: SearchStringProps) => {
   const [searchStringValue, setSearchStringValue] = useState<string>("");
   const filterEvents = () =>
-    // функция выполняемая при отправке `поискового запроса`, поиск по всем имеющимся событиям
     allEvents.filter((event: Event) =>
       event.message
         .toLowerCase()
