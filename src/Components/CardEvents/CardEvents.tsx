@@ -48,7 +48,7 @@ const CardEvents = ({
       />
     ));
     return (
-      <div style={{ minWidth: "1360px" }} className="grid ">
+      <div style={{ minWidth: "1360px", maxWidth: '1400px' }} className="grid ">
         {list}
       </div>
     );
